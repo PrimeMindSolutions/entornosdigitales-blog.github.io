@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciberacoso | Blog</title>
+    <style>
+        /* --- ESTILOS IDENTICOS AL ARTICULO 1 --- */
+        :root {
+            --primary: #2c3e50;
+            --accent: #9b59b6; /* Un morado para diferenciar tema */
+            --text: #333;
+            --bg: #fff;
+            --sidebar-width: 250px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.8;
+            background: #fdfdfd;
+        }
+
+        /* --- PROGRESS BAR --- */
+        .progress-container { position: fixed; top: 0; z-index: 1000; width: 100%; height: 5px; background: #f1f1f1; }
+        .progress-bar { height: 5px; background: var(--accent); width: 0%; transition: width 0.1s; }
+
+        /* --- HEADER --- */
+        header {
+            background: white; padding: 20px 40px; border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: bold; color: var(--primary); text-decoration: none; letter-spacing: 1px; }
+        .back-btn { text-decoration: none; color: #777; font-size: 0.9rem; transition: 0.3s; }
+        .back-btn:hover { color: var(--accent); }
+
+        /* --- LAYOUT --- */
+        .layout-wrapper {
+            display: grid; grid-template-columns: var(--sidebar-width) 1fr; gap: 60px;
+            max-width: 1100px; margin: 60px auto; padding: 0 20px;
+        }
+
+        /* --- SIDEBAR --- */
+        aside { position: relative; }
+        .toc-sticky { position: sticky; top: 80px; }
+        .toc-title { text-transform: uppercase; font-size: 0.8rem; color: #999; margin-bottom: 15px; letter-spacing: 1px; }
+        .toc-list { list-style: none; border-left: 2px solid #eee; }
+        .toc-list a {
+            display: block; text-decoration: none; color: #666; font-size: 0.95rem; padding: 8px 0 8px 20px;
+            transition: all 0.2s; position: relative;
+        }
+        .toc-list a:hover, .toc-list a.active { color: var(--accent); font-weight: 600; }
+        .toc-list a:hover::before, .toc-list a.active::before {
+            content: ''; position: absolute; left: -2px; top: 0; height: 100%; width: 2px; background: var(--accent);
+        }
+
+        /* --- ARTICLE --- */
+        article { max-width: 700px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary); line-height: 1.2; }
+        .meta { color: #888; margin-bottom: 40px; font-size: 0.9rem; }
+        .featured-image { width: 100%; height: 350px; object-fit: cover; border-radius: 6px; margin-bottom: 40px; }
+        h2 { font-size: 1.8rem; margin: 50px 0 20px 0; color: var(--primary); scroll-margin-top: 80px; }
+        p { margin-bottom: 20px; font-size: 1.05rem; color: #444; }
+        
+        .quote-box {
+            border-left: 4px solid var(--accent);
+            background: #f8f0fc;
+            padding: 20px;
+            font-style: italic;
+            margin: 30px 0;
+            color: #555;
+        }
+
+        /* --- RECOMENDADOS --- */
+        .recommended-section { margin-top: 80px; padding-top: 40px; border-top: 1px solid #eee; }
+        .rec-title { font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; color: var(--primary); }
+        .rec-card {
+            display: flex; align-items: center; background: #f9f9f9; padding: 15px; border-radius: 6px;
+            text-decoration: none; color: inherit; transition: transform 0.2s;
+        }
+        .rec-card:hover { transform: translateX(5px); background: #f0f0f0; }
+        .rec-thumb { width: 60px; height: 60px; background: #ddd; border-radius: 4px; margin-right: 15px; object-fit: cover;}
+
+        @media (max-width: 768px) {
+            .layout-wrapper { grid-template-columns: 1fr; }
+            aside { display: none; }
+            h1 { font-size: 2rem; }
+            .featured-image { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="logo">CORP. DIGITAL</a>
+        <a href="index.html" class="back-btn">✕ Cerrar</a>
+    </header>
+
+    <div class="layout-wrapper">
+        <aside>
+            <div class="toc-sticky">
+                <div class="toc-title">Tabla de Contenido</div>
+                <ul class="toc-list">
+                    <li><a href="#intro" class="active">Introducción</a></li>
+                    <li><a href="#empatia">1. Empatía Digital</a></li>
+                    <li><a href="#protocolos">2. Protocolos de Acción</a></li>
+                    <li><a href="#evidencia">3. Recolección de Evidencia</a></li>
+                    <li><a href="#conclusion">Conclusión</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <article>
+            <header id="intro">
+                <h1>Cómo evitar el ciberacoso y promover el respeto</h1>
+                <div class="meta">Por Equipo de RRHH • 12 Oct, 2025 • 4 min de lectura</div>
+            </header>
+
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Conexión" class="featured-image">
+
+            <p class="lead">
+                El ciberacoso no es exclusivo de los patios escolares; permea entornos laborales y redes profesionales.
+                Aprender a identificarlo y detenerlo es vital para una convivencia sana.
+            </p>
+
+            <h2 id="empatia">1. El poder de la empatía digital</h2>
+            <p>
+                Detrás de cada avatar hay una persona. La desinhibición en línea nos hace olvidar a veces que nuestras palabras hieren.
+                Antes de comentar, aplica la regla de oro: ¿Lo dirías si estuvieras frente a frente?
+            </p>
+            
+            <div class="quote-box">
+                "La tecnología debe ser un puente entre personas, no una barrera para la compasión."
+            </div>
+
+            <h2 id="protocolos">2. Protocolos de Acción</h2>
+            <p>
+                Si eres testigo de acoso, no seas un espectador silencioso. Reporta el comportamiento a los administradores de la plataforma o red.
+                Si eres la víctima, recuerda: <strong>No alimentes al troll</strong>. Responder suele escalar la agresión.
+            </p>
+
+            <h2 id="evidencia">3. Recolección de Evidencia</h2>
+            <p>
+                Antes de bloquear al agresor, toma capturas de pantalla. Documentar fechas, horas y contenidos es crucial si el asunto
+                requiere intervención legal o corporativa.
+            </p>
+
+            <h2 id="conclusion">Conclusión</h2>
+            <p>
+                Crear un entorno digital seguro depende de las micro-acciones diarias de cada usuario. Seamos parte de la solución.
+            </p>
+
+            <div class="recommended-section">
+                <div class="rec-title">Lectura anterior:</div>
+                <a href="articulo1.html" class="rec-card">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Thumb" class="rec-thumb">
+                    <div>
+                        <strong>Seguridad Digital Básica</strong><br>
+                        <small style="color:#777">Protege tus contraseñas y datos</small>
+                    </div>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        window.onscroll = function() {myFunction()};
+        function myFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }
+    </script>
+</body>
+</html>

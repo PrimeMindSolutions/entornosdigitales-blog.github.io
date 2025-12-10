@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad Digital | Blog</title>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --bg: #fff;
+            --sidebar-width: 250px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.8;
+            background: #fdfdfd;
+        }
+
+        /* --- PROGRESS BAR --- */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            height: 5px;
+            background: #f1f1f1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* --- HEADER SIMPLIFICADO --- */
+        header {
+            background: white;
+            padding: 20px 40px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: bold; color: var(--primary); text-decoration: none; letter-spacing: 1px; }
+        .back-btn { text-decoration: none; color: #777; font-size: 0.9rem; transition: 0.3s; }
+        .back-btn:hover { color: var(--accent); }
+
+        /* --- LAYOUT GRID --- */
+        .layout-wrapper {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr; /* Sidebar fijo, contenido flexible */
+            gap: 60px;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* --- SIDEBAR (TOC) --- */
+        aside {
+            position: relative;
+        }
+
+        .toc-sticky {
+            position: sticky;
+            top: 80px; /* Para que no pegue arriba al hacer scroll */
+        }
+
+        .toc-title {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .toc-list {
+            list-style: none;
+            border-left: 2px solid #eee;
+        }
+
+        .toc-list li { margin-bottom: 0; }
+
+        .toc-list a {
+            display: block;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.95rem;
+            padding: 8px 0 8px 20px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .toc-list a:hover, .toc-list a.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .toc-list a:hover::before, .toc-list a.active::before {
+            content: '';
+            position: absolute;
+            left: -2px; /* Coincide con el borde del padre */
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--accent);
+        }
+
+        /* --- CONTENIDO ARTICULO --- */
+        article {
+            max-width: 700px; /* Ancho cómodo para leer */
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary); line-height: 1.2; }
+        .meta { color: #888; margin-bottom: 40px; font-size: 0.9rem; }
+        
+        .featured-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 40px;
+        }
+
+        h2 { font-size: 1.8rem; margin: 50px 0 20px 0; color: var(--primary); scroll-margin-top: 80px; }
+        p { margin-bottom: 20px; font-size: 1.05rem; color: #444; }
+        ul { margin-bottom: 20px; padding-left: 20px; color: #444; }
+        li { margin-bottom: 10px; }
+
+        /* --- RECOMENDADOS --- */
+        .recommended-section {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+        
+        .rec-title { font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; color: var(--primary); }
+        
+        .rec-card {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+        }
+        
+        .rec-card:hover { transform: translateX(5px); background: #f0f0f0; }
+        .rec-thumb { width: 60px; height: 60px; background: #ddd; border-radius: 4px; margin-right: 15px; object-fit: cover;}
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .layout-wrapper { grid-template-columns: 1fr; }
+            aside { display: none; /* Ocultar TOC en movil para simplicidad */ }
+            h1 { font-size: 2rem; }
+            .featured-image { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE PROGRESO -->
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo">CORP. DIGITAL</a>
+        <a href="index.html" class="back-btn">✕ Cerrar</a>
+    </header>
+
+    <div class="layout-wrapper">
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside>
+            <div class="toc-sticky">
+                <div class="toc-title">Tabla de Contenido</div>
+                <ul class="toc-list">
+                    <li><a href="#intro" class="active">Introducción</a></li>
+                    <li><a href="#contrasenas">1. Higiene de Contraseñas</a></li>
+                    <li><a href="#mfa">2. Autenticación 2FA</a></li>
+                    <li><a href="#phishing">3. Prevención de Phishing</a></li>
+                    <li><a href="#conclusion">Conclusión</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <article>
+            <header id="intro">
+                <h1>Seguridad Digital Básica: Protege tu Activo Más Valioso</h1>
+                <div class="meta">Por Equipo de Seguridad • 10 Oct, 2025 • 3 min de lectura</div>
+            </header>
+
+            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Seguridad" class="featured-image">
+
+            <p class="lead">
+                En un mundo donde los datos son el nuevo petróleo, la seguridad personal ya no es opcional.
+                Este artículo desglosa los pilares fundamentales para mantener tu integridad digital a salvo.
+            </p>
+
+            <h2 id="contrasenas">1. La higiene de las contraseñas</h2>
+            <p>
+                La primera línea de defensa es una contraseña robusta. Evita fechas de cumpleaños o nombres de mascotas.
+                Lo ideal es utilizar frases largas o gestores de contraseñas que generen cadenas aleatorias.
+            </p>
+            <p>
+                <strong>Tip Pro:</strong> Cambia tus contraseñas críticas cada 3 meses y nunca uses la misma clave para tu correo y tu banco.
+            </p>
+
+            <h2 id="mfa">2. Autenticación de dos pasos (2FA)</h2>
+            <p>
+                La autenticación de dos factores añade una capa de "algo que tienes" (tu teléfono) a "algo que sabes" (tu contraseña).
+                Actívalo en todas las redes sociales y correos corporativos. Apps como Google Authenticator o Authy son preferibles a los SMS.
+            </p>
+
+            <h2 id="phishing">3. Prevención de Phishing</h2>
+            <p>
+                El 90% de las brechas de seguridad comienzan con un error humano. Si recibes un correo urgente pidiendo
+                datos, detente. Verifica el remitente. Los bancos nunca piden contraseñas por email.
+            </p>
+
+            <h2 id="conclusion">Conclusión</h2>
+            <p>
+                La seguridad no es un producto, es un proceso. Mantenerse alerta y educado es la mejor herramienta contra el cibercrimen.
+            </p>
+
+            <!-- ARTICULOS RECOMENDADOS -->
+            <div class="recommended-section">
+                <div class="rec-title">Te podría interesar:</div>
+                <a href="articulo2.html" class="rec-card">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Thumb" class="rec-thumb">
+                    <div>
+                        <strong>Cómo evitar el ciberacoso</strong><br>
+                        <small style="color:#777">Guía de convivencia digital</small>
+                    </div>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        // SCRIPT BARRA DE PROGRESO
+        window.onscroll = function() {myFunction()};
+
+        function myFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }
+    </script>
+</body>
+</html>
